@@ -1,0 +1,11 @@
+For this project, I attempted to find a good approximation for an NP-Hard problem. The problem formulation was as follows:
+Given a DAG, we wish to find an optimal partitioning of the subsets of this graph, such that the 'score' of each of the subsets is equal to the sum of the individual 'weights' of the subset multiplied by the length of the subset, and the score of the partition is equal to the sum of the scores of the subsets (which we wish to maximize).
+
+main.py contains 3 algorithms. Two were greedy algorithms (the first tried to form chains by always choosing the neighbor with the highest vertex value, the second by comparing the ratio of in-degrees to out-degrees), and the third combines randomization and restarts in combination with the second greedy algorithm. The randomized algorithm also uses an idea along the lines of simulated annealing, in that we sever a path with some probability, but as the length of the path increases, we this probability decreases exponentially.
+
+To run the code, use:
+main.py (input_file_start) (input_file_end)
+Where the first and second input file denote the numerical range of files to run the code on. These input files are located in the "170_final_inputs" folder, as ".in" files. This will run the random and the second greedy algorithm, and will save the output to a folder called "Better". An example output can be found in Example_output.txt. 
+
+Currently, the code uses very few iterations, but this can be changed as inputs to the main() method (not necessarily recommended, as it is rather resource intensive).
+
