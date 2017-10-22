@@ -88,13 +88,12 @@ def randomized_one(g):
             allNodes.remove(node)
     return allTeams
 
-# Shortens a path we have found so far depending on the factors Marc & Lenny
-# agreed on:
-# 1. The longer a path is, the more unlikely we want to severe the path. Thus
+# Shortens a path we have found so far depending on the following factors:
+# 1. The longer a path is, the less we want to sever the path. Thus
 # say that we start @ node A, if the length of the path is the same size as A's
-# connected component, then we do not severe it, however if it is much shorter,
+# connected component, then we do not sever it, however if it is much shorter,
 # then we have a much higher chance of severing it
-# 2. The spot @ which we severe depends on the degree of each vertex, which is
+# 2. The spot @ which we sever depends on the degree of each vertex, which is
 # passed in through NODETODEGREE
 def shortenPath(G, nodeToDegree, team):
     teamSize = len(team)
@@ -110,8 +109,6 @@ def shortenPath(G, nodeToDegree, team):
         prev = prev + float(nodeToDegree[team[i]]) / degreeSum
         if prev >= pick:
             return team[:i]
-    print("Should not reach this line")
-
 
 
 # Returns True if there are vertices that have not been explored in NEIGHBORS
@@ -605,18 +602,17 @@ def instance(inpt, iterations, iterations_greedy_one, prob): #[start, finish]
     G = create_graph(a, b)
     teams, score = read_sol(inpt)
     best = [teams, score]
-    teams, score = concatenate_teams(G, teams)
-    print(score, " ", best[1])
-    if score > best[1]:
-        print("SUCCESS BABY")
-        FLAG = 3
-        return teams, score, FLAG
+#     teams, score = concatenate_teams(G, teams)
+#     print(score, " ", best[1])
+#     if score > best[1]:
+#         FLAG = 3
+#         return teams, score, FLAG
 
     # best = [teams, score]
     # if len(teams) == 1:
     #     print("best solution already found")
     #     return best[0], best[1], FLAG
-    # teams, score = generate_greedy_random_solution(G, 0)
+    teams, score = generate_greedy_random_solution(G, 0)
     # best = [teams, score]
     # if len(teams) == 1:
     #     print("best solution already found")
@@ -625,7 +621,7 @@ def instance(inpt, iterations, iterations_greedy_one, prob): #[start, finish]
     # if len(teams) == 1:
     #     print("greedy one hamiltonian")
     #     return best[0], best[1], FLAG
-    # teams, score = generate_solution(greedy_three, G)
+    teams, score = generate_solution(greedy_three, G)
     # if best[1] < score:
     #     best[1] = score
     #     best[0] = teams
@@ -664,7 +660,7 @@ def instance(inpt, iterations, iterations_greedy_one, prob): #[start, finish]
 
 sys.setrecursionlimit(1000)
 
-def main(start, finish, iterations=700, iterations_greedy=50, prob=0.2): #prob = probability of passing on an "optimal" node for randomized greedy_one
+def main(start, finish, iterations=5, iterations_greedy=5, prob=0.2): #prob = probability of passing on an "optimal" node for randomized greedy_one
     
     for i in range(start, finish+1):
         print("current instance: ", i)
